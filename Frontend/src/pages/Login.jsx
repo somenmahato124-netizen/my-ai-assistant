@@ -34,33 +34,39 @@ const {serverUrl,userData,setUserData}=useContext(userDataContext)
 
     setErrorMessage("");
     setLoading(true);
-console.log(formData);
-    try {
-      const response = await axios.post(
-        `${serverUrl}/api/auth/signin`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
-      
-      console.log("Login response:", response.data);
 
-      setUserData(response.data)
+    console.log("Login data:", formData);
+
+    try {
+        const response = await axios.post(
+            `${serverUrl}/api/auth/signin`,
+            formData,
+            {
+                withCredentials: true,
+            }
+        );
+
+        console.log("Login response:", response.data);
+
+        setUserData(response.data.user);
+
+        // Login successful হলে home page
+        navigate("/home");
 
     } catch (error) {
-      console.log("Login error:", error.response?.data);
-      setUserData(null)
+        console.log("Login error:", error);
+        console.log("Login error response:", error.response?.data);
 
-      setErrorMessage(
-        error.response?.data?.message ||
-        "Unable to login. Please try again."
-      );
+        setUserData(null);
 
+        setErrorMessage(
+            error.response?.data?.message ||
+            "Unable to login. Please try again."
+        );
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   return (
     <div className="login-page">
