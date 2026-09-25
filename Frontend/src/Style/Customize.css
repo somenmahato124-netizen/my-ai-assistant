@@ -1,0 +1,639 @@
+/* ========================================
+   CUSTOMIZE PAGE
+======================================== */
+
+.customize {
+  min-height: 100vh;
+  width: 100%;
+  padding: 50px 30px 100px;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(0, 234, 255, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(120, 40, 255, 0.14),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #020617,
+      #030b25 50%,
+      #020617
+    );
+
+  color: white;
+  overflow-x: hidden;
+}
+
+
+/* ========================================
+   MAIN CARD GRID
+======================================== */
+
+.customize-container {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+
+  justify-items: center;
+}
+
+
+/* ========================================
+   HEADING
+======================================== */
+
+.heading {
+  grid-column: 1 / -1;
+
+  width: 100%;
+  margin: 0 0 25px;
+
+  text-align: center;
+
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+
+  line-height: 1.2;
+  letter-spacing: 1px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 0 10px rgba(0, 234, 255, 0.4),
+    0 0 30px rgba(0, 234, 255, 0.15);
+}
+
+.heading span {
+  color: #00eaff;
+
+  text-shadow:
+    0 0 10px rgba(0, 234, 255, 0.7),
+    0 0 25px rgba(0, 234, 255, 0.35);
+}
+
+
+/* ========================================
+   NORMAL IMAGE CARD
+======================================== */
+
+.card {
+  position: relative;
+
+  width: 100%;
+  max-width: 240px;
+  height: 300px;
+
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 2px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35);
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+
+/* ========================================
+   CARD IMAGE
+======================================== */
+
+.card img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.5s ease,
+    filter 0.5s ease;
+}
+
+
+/* ========================================
+   CARD HOVER
+======================================== */
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+
+  border-color: #00eaff;
+
+  box-shadow:
+    0 0 15px rgba(0, 234, 255, 0.35),
+    0 15px 45px rgba(0, 0, 0, 0.5);
+}
+
+.card:hover img {
+  transform: scale(1.08);
+
+  filter: brightness(1.08);
+}
+
+
+/* ========================================
+   CARD DARK OVERLAY
+======================================== */
+
+.card::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 50%,
+      rgba(0, 0, 0, 0.45)
+    );
+
+  opacity: 0.7;
+}
+
+
+/* ========================================
+   SELECTED CARD
+======================================== */
+
+.card.selected {
+  border: 3px solid #00eaff;
+
+  transform: scale(1.04);
+
+  box-shadow:
+    0 0 12px #00eaff,
+    0 0 35px rgba(0, 234, 255, 0.5),
+    0 0 60px rgba(0, 234, 255, 0.2);
+
+  animation: selectedGlow 2s ease-in-out infinite;
+}
+
+
+/* ========================================
+   SELECTED CHECK ICON
+======================================== */
+
+.card.selected::before {
+  content: "✓";
+
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  z-index: 10;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #00eaff;
+
+  color: #001018;
+
+  font-size: 20px;
+  font-weight: 900;
+
+  box-shadow:
+    0 0 10px #00eaff,
+    0 0 25px rgba(0, 234, 255, 0.7);
+}
+
+
+/* ========================================
+   SELECTED CARD ANIMATION
+======================================== */
+
+@keyframes selectedGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px rgba(0, 234, 255, 0.5),
+      0 0 30px rgba(0, 234, 255, 0.2);
+  }
+
+  50% {
+    box-shadow:
+      0 0 20px rgba(0, 234, 255, 0.8),
+      0 0 50px rgba(0, 234, 255, 0.35);
+  }
+}
+
+
+/* ========================================
+   CUSTOM UPLOAD CARD
+======================================== */
+
+.upload-card {
+  border: 2px dashed rgba(0, 234, 255, 0.55);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0, 234, 255, 0.07),
+      rgba(60, 40, 150, 0.12)
+    );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+/* Remove overlay from upload card */
+
+.upload-card::after {
+  display: none;
+}
+
+
+/* ========================================
+   UPLOAD CONTENT
+======================================== */
+
+.upload-content {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+}
+
+
+/* ========================================
+   ADD ICON
+======================================== */
+
+.add-icon {
+  width: 75px;
+  height: 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 3px solid #00eaff;
+
+  background:
+    rgba(0, 234, 255, 0.08);
+
+  color: #00eaff;
+
+  font-size: 55px;
+  font-weight: 300;
+
+  line-height: 1;
+
+  box-shadow:
+    0 0 15px rgba(0, 234, 255, 0.35),
+    inset 0 0 15px rgba(0, 234, 255, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* ========================================
+   UPLOAD CARD HOVER
+======================================== */
+
+.upload-card:hover {
+  border-color: #00eaff;
+
+  border-style: solid;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0, 234, 255, 0.12),
+      rgba(70, 30, 180, 0.18)
+    );
+}
+
+.upload-card:hover .add-icon {
+  transform: rotate(90deg) scale(1.1);
+
+  background: rgba(0, 234, 255, 0.15);
+
+  box-shadow:
+    0 0 20px rgba(0, 234, 255, 0.7),
+    0 0 40px rgba(0, 234, 255, 0.25);
+}
+
+
+/* ========================================
+   UPLOAD TEXT
+======================================== */
+
+.upload-content p {
+  margin: 20px 0 7px;
+
+  font-size: 19px;
+  font-weight: 700;
+
+  color: #ffffff;
+
+  letter-spacing: 0.5px;
+}
+
+.upload-content span {
+  font-size: 13px;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  letter-spacing: 0.5px;
+}
+
+
+/* ========================================
+   CUSTOM IMAGE
+======================================== */
+
+.upload-card img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+
+/* ========================================
+   NEXT BUTTON
+======================================== */
+
+.customize-btn {
+  display: block;
+
+  margin: 45px auto 0;
+
+  min-width: 180px;
+
+  padding: 14px 35px;
+
+  border: 2px solid #00eaff;
+
+  border-radius: 50px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #00eaff,
+      #0077ff
+    );
+
+  color: #001018;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 15px rgba(0, 234, 255, 0.4),
+    0 0 35px rgba(0, 119, 255, 0.2);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
+}
+
+
+/* ========================================
+   NEXT BUTTON HOVER
+======================================== */
+
+.customize-btn:hover {
+  transform: translateY(-4px) scale(1.04);
+
+  filter: brightness(1.1);
+
+  box-shadow:
+    0 0 20px rgba(0, 234, 255, 0.7),
+    0 0 50px rgba(0, 119, 255, 0.4);
+}
+
+
+/* ========================================
+   NEXT BUTTON ACTIVE
+======================================== */
+
+.customize-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 1000px) {
+
+  .customize {
+    padding: 40px 25px 80px;
+  }
+
+  .customize-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .card {
+    height: 280px;
+  }
+}
+
+
+/* ========================================
+   SMALL TABLET
+======================================== */
+
+@media (max-width: 750px) {
+
+  .customize {
+    padding: 35px 20px 70px;
+  }
+
+  .customize-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    max-width: 260px;
+    height: 300px;
+  }
+
+  .heading {
+    margin-bottom: 15px;
+  }
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 480px) {
+
+  .customize {
+    padding: 30px 15px 60px;
+  }
+
+  .customize-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .heading {
+    font-size: 27px;
+
+    line-height: 1.25;
+
+    margin-bottom: 15px;
+  }
+
+  .card {
+    width: 100%;
+    height: 230px;
+
+    border-radius: 17px;
+  }
+
+  .card:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+
+  .card.selected {
+    transform: scale(1.02);
+  }
+
+  .card.selected::before {
+    width: 28px;
+    height: 28px;
+
+    top: 8px;
+    right: 8px;
+
+    font-size: 16px;
+  }
+
+  .add-icon {
+    width: 55px;
+    height: 55px;
+
+    font-size: 40px;
+
+    border-width: 2px;
+  }
+
+  .upload-content p {
+    margin-top: 14px;
+
+    font-size: 15px;
+  }
+
+  .upload-content span {
+    font-size: 11px;
+  }
+
+  .customize-btn {
+    margin-top: 30px;
+
+    min-width: 150px;
+
+    padding: 12px 28px;
+
+    font-size: 15px;
+  }
+}
+
+
+/* ========================================
+   VERY SMALL MOBILE
+======================================== */
+
+@media (max-width: 350px) {
+
+  .customize-container {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    max-width: 260px;
+    height: 300px;
+  }
+
+  .heading {
+    font-size: 24px;
+  }
+}
+
+
+/* ========================================
+   REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .card,
+  .card img,
+  .customize-btn,
+  .add-icon {
+    transition: none;
+  }
+
+  .card.selected {
+    animation: none;
+  }
+}

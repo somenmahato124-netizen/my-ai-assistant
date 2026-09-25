@@ -1,0 +1,813 @@
+
+/* =========================================================
+   MAIN PAGE - AI VOICE ASSISTANT
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main-container {
+  width: 100%;
+  min-height: 100vh;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 90px 20px 40px;
+
+  overflow: hidden;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  color: white;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(0, 183, 255, 0.22),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(128, 0, 255, 0.22),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #01030f 0%,
+      #03052b 50%,
+      #08002d 100%
+    );
+}
+
+
+/* =========================================================
+   BACKGROUND LIGHT EFFECTS
+========================================================= */
+
+.main-container::before {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  top: -150px;
+  left: -120px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 174, 255, 0.15);
+
+  filter: blur(90px);
+
+  animation: backgroundMove 7s ease-in-out infinite alternate;
+
+  pointer-events: none;
+}
+
+.main-container::after {
+  content: "";
+
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  right: -150px;
+  bottom: -180px;
+
+  border-radius: 50%;
+
+  background: rgba(125, 50, 255, 0.18);
+
+  filter: blur(100px);
+
+  animation: backgroundMove2 8s ease-in-out infinite alternate;
+
+  pointer-events: none;
+}
+
+@keyframes backgroundMove {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(80px, 60px);
+  }
+}
+
+@keyframes backgroundMove2 {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(-70px, -60px);
+  }
+}
+
+
+/* =========================================================
+   TOP BUTTONS
+========================================================= */
+
+.main-container > button {
+  position: absolute;
+
+  top: 25px;
+
+  padding: 11px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  transition: all 0.3s ease;
+
+  z-index: 20;
+}
+
+
+/* Customize button */
+
+.main-container > button:first-child {
+  right: 145px;
+}
+
+
+/* Logout button */
+
+.main-container > button.logout {
+  right: 25px;
+}
+
+
+/* Button hover */
+
+.main-container > button:hover {
+  transform: translateY(-3px);
+
+  background: rgba(255, 255, 255, 0.16);
+
+  border-color: rgba(0, 212, 255, 0.7);
+
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.25),
+    0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Logout hover */
+
+.main-container > button.logout:hover {
+  border-color: rgba(255, 90, 90, 0.7);
+
+  box-shadow:
+    0 0 15px rgba(255, 70, 70, 0.25),
+    0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+.main-container > button:active {
+  transform: scale(0.95);
+}
+
+
+/* =========================================================
+   ASSISTANT IMAGE CONTAINER
+========================================================= */
+
+.assistant-image-container {
+  width: 310px;
+  height: 390px;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px;
+
+  border-radius: 28px;
+
+  /*
+     IMPORTANT:
+     Clearly visible border around image
+  */
+
+  border: 3px solid rgba(0, 212, 255, 0.75);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0, 212, 255, 0.15),
+      rgba(120, 50, 255, 0.15)
+    );
+
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.4),
+    0 0 40px rgba(0, 212, 255, 0.18),
+    0 0 80px rgba(110, 50, 255, 0.12);
+
+  z-index: 5;
+
+  animation: imageFloat 4s ease-in-out infinite;
+}
+
+
+/* Outer glow */
+
+.assistant-image-container::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -8px;
+
+  border-radius: 34px;
+
+  border: 1px solid rgba(138, 43, 226, 0.5);
+
+  box-shadow:
+    0 0 25px rgba(138, 43, 226, 0.25);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* Animated border */
+
+.assistant-image-container::after {
+  content: "";
+
+  position: absolute;
+
+  inset: -3px;
+
+  border-radius: 30px;
+
+  border: 2px solid transparent;
+
+  border-top-color: rgba(255, 255, 255, 0.8);
+  border-right-color: rgba(0, 212, 255, 0.8);
+
+  animation: rotateBorder 4s linear infinite;
+
+  pointer-events: none;
+}
+
+
+
+
+@keyframes imageFloat {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   ASSISTANT IMAGE
+========================================================= */
+
+.assistant-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 21px;
+
+  border: 2px solid rgba(255, 255, 255, 0.15);
+
+  background: #050718;
+
+  box-shadow:
+    inset 0 0 30px rgba(0, 0, 0, 0.5);
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   ASSISTANT NAME
+========================================================= */
+
+.assistant-name {
+  margin-top: 25px;
+  margin-bottom: 15px;
+
+  padding: 10px 25px;
+
+  /*
+     CLEAR VISIBLE BORDER
+  */
+
+  border: 2px solid rgba(0, 212, 255, 0.55);
+
+  border-radius: 14px;
+
+  background:
+    rgba(0, 212, 255, 0.07);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  color:blue;
+
+  font-size: 21px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.6px;
+
+  text-align: center;
+
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.12),
+    inset 0 0 15px rgba(0, 212, 255, 0.04);
+
+  z-index: 5;
+
+  transition: all 0.3s ease;
+}
+
+
+.assistant-name:hover {
+  border-color: rgba(0, 212, 255, 0.9);
+
+  box-shadow:
+    0 0 25px rgba(0, 212, 255, 0.25);
+}
+
+
+/* =========================================================
+   USER / AI GIF
+========================================================= */
+
+
+.main-container > img {
+  width: 88px;
+  height: 88px;
+
+  object-fit: contain;
+
+  margin: 4px 0 12px;
+
+  padding: 4px;
+
+  border-radius: 50%;
+
+  border: 2px solid rgba(0, 212, 255, 0.45);
+
+  background: rgba(255, 255, 255, 0.05);
+
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.2);
+
+  z-index: 5;
+
+  animation: voiceIcon 1.8s ease-in-out infinite;
+}
+
+
+@keyframes voiceIcon {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+/* =========================================================
+   RESPONSE / USER TEXT
+========================================================= */
+
+.main-container h1 {
+  width: min(850px, 90%);
+
+  min-height: 55px;
+
+  margin-top: 5px;
+
+  padding: 12px 22px;
+
+  /*
+     VERY CLEAR BORDER
+  */
+
+  border: 2px solid rgba(0, 212, 255, 0.65);
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  color: #ffffff;
+
+  font-size: clamp(18px, 2vw, 26px);
+
+  font-weight: 500;
+
+  line-height: 1.5;
+
+  text-align: center;
+
+  word-break: break-word;
+
+  box-shadow:
+    0 0 18px rgba(0, 212, 255, 0.15),
+    inset 0 0 20px rgba(0, 212, 255, 0.03);
+
+  z-index: 5;
+
+  animation: responseAppear 0.4s ease;
+}
+
+
+@keyframes responseAppear {
+  from {
+    opacity: 0;
+
+    transform: translateY(12px);
+
+    box-shadow:
+      0 0 0 rgba(0, 212, 255, 0);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+
+    box-shadow:
+      0 0 18px rgba(0, 212, 255, 0.15);
+  }
+}
+
+
+/* =========================================================
+   LISTENING STATE
+========================================================= */
+
+/*
+   Add class "listening" to the image container
+   when listening === true.
+*/
+
+.assistant-image-container.listening {
+  border-color: #00e5ff;
+
+  box-shadow:
+    0 0 20px rgba(0, 229, 255, 0.7),
+    0 0 50px rgba(0, 229, 255, 0.4),
+    0 0 100px rgba(0, 229, 255, 0.2);
+
+  animation:
+    imageFloat 4s ease-in-out infinite,
+    listeningPulse 1.5s ease-in-out infinite;
+}
+
+
+@keyframes listeningPulse {
+  0% {
+    box-shadow:
+      0 0 15px rgba(0, 229, 255, 0.4),
+      0 0 40px rgba(0, 229, 255, 0.2);
+  }
+
+  50% {
+    box-shadow:
+      0 0 30px rgba(0, 229, 255, 0.8),
+      0 0 80px rgba(0, 229, 255, 0.45);
+  }
+
+  100% {
+    box-shadow:
+      0 0 15px rgba(0, 229, 255, 0.4),
+      0 0 40px rgba(0, 229, 255, 0.2);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .main-container {
+    padding: 85px 18px 35px;
+  }
+
+
+  .assistant-image-container {
+    width: 280px;
+    height: 350px;
+  }
+
+
+  .assistant-name {
+    font-size: 19px;
+
+    padding: 9px 20px;
+  }
+
+
+  .main-container h1 {
+    width: 92%;
+
+    font-size: 19px;
+
+    padding: 11px 16px;
+  }
+
+
+  .main-container > button {
+    top: 20px;
+
+    padding: 9px 14px;
+
+    font-size: 13px;
+  }
+
+
+  .main-container > button:first-child {
+    right: 125px;
+  }
+
+
+  .main-container > button.logout {
+    right: 18px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .main-container {
+    min-height: 100svh;
+
+    padding:
+      75px
+      12px
+      30px;
+  }
+
+
+  /* Buttons */
+
+  .main-container > button {
+    top: 15px;
+
+    padding: 8px 11px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+  }
+
+
+  .main-container > button:first-child {
+    left: 12px;
+
+    right: auto;
+  }
+
+
+  .main-container > button.logout {
+    right: 12px;
+  }
+
+
+  /* Assistant image */
+
+  .assistant-image-container {
+    width: min(75vw, 260px);
+
+    height: min(95vw, 325px);
+
+    padding: 4px;
+
+    border-width: 2px;
+
+    border-radius: 23px;
+  }
+
+
+  .assistant-image {
+    border-radius: 18px;
+  }
+
+
+  /* Assistant name */
+
+  .assistant-name {
+    max-width: 90%;
+
+    margin-top: 20px;
+    margin-bottom: 12px;
+
+    padding: 8px 17px;
+
+    border-width: 2px;
+
+    border-radius: 12px;
+
+    font-size: 17px;
+  }
+
+
+  /* Voice image */
+
+  .main-container > img {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 10px;
+  }
+
+
+  /* Response */
+
+  .main-container h1 {
+    width: 94%;
+
+    min-height: 50px;
+
+    padding: 9px 12px;
+
+    border-width: 2px;
+
+    border-radius: 13px;
+
+    font-size: 16px;
+
+    line-height: 1.45;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 350px) {
+
+  .main-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+
+  .main-container > button {
+    padding: 7px 9px;
+
+    font-size: 11px;
+  }
+
+
+  .main-container > button:first-child {
+    left: 8px;
+  }
+
+
+  .main-container > button.logout {
+    right: 8px;
+  }
+
+
+  .assistant-image-container {
+    width: 220px;
+
+    height: 280px;
+  }
+
+
+  .assistant-name {
+    font-size: 15px;
+
+    padding: 7px 13px;
+  }
+
+
+  .main-container h1 {
+    font-size: 14px;
+
+    padding: 8px 10px;
+  }
+}
+
+
+/* =========================================================
+   LANDSCAPE MOBILE
+========================================================= */
+
+@media (max-height: 600px) and (orientation: landscape) {
+
+  .main-container {
+    min-height: 100vh;
+
+    padding-top: 65px;
+
+    justify-content: flex-start;
+
+    overflow-y: auto;
+  }
+
+
+  .assistant-image-container {
+    width: 190px;
+
+    height: 240px;
+  }
+
+
+  .assistant-name {
+    margin-top: 12px;
+
+    margin-bottom: 8px;
+  }
+
+
+  .main-container > img {
+    width: 40px;
+    height: 40px;
+  }
+
+
+  .main-container h1 {
+    margin-bottom: 20px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}
