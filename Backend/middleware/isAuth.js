@@ -4,6 +4,8 @@ const isAuth = async (req, res, next) => {
     try {
         const token = req.cookies?.token;
 
+        console.log("TOKEN RECEIVED:", !!token);
+
         if (!token) {
             return res.status(401).json({
                 message: "User token not found"
@@ -15,11 +17,14 @@ const isAuth = async (req, res, next) => {
             process.env.JWT_SECRET
         );
 
+        console.log("TOKEN VERIFIED:", verifyToken);
+
         req.userId = verifyToken.userId;
 
         next();
+
     } catch (error) {
-        console.log("Auth error:", error.message);
+        console.log("AUTH ERROR:", error.message);
 
         return res.status(401).json({
             message: "Invalid or expired token"
