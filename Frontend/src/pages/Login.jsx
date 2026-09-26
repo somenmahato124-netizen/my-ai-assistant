@@ -1,363 +1,377 @@
-
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Style/Login.css";
 import { userDataContext } from "../context/UserContext.jsx";
+
 const Login = () => {
-  
-  const navigate = useNavigate();
-const {serverUrl,userData,setUserData}=useContext(userDataContext)
-  const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+    const {
+        serverUrl,
+        setUserData
+    } = useContext(userDataContext);
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    });
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    setErrorMessage("");
-  };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value
+        }));
 
-    setErrorMessage("");
-    setLoading(true);
+        setErrorMessage("");
+    };
 
-    console.log("Login data:", formData);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    try {
-        const response = await axios.post(
-            `${serverUrl}/api/auth/signin`,
-            formData,
-            {
-                withCredentials: true,
+        setErrorMessage("");
+        setLoading(true);
+
+        try {
+            const response = await axios.post(
+                `${serverUrl}/api/auth/signin`,
+                formData,
+                {
+                    withCredentials: true
+                }
+            );
+
+            console.log("Login successful:", response.data);
+
+            if (response.data?.user) {
+                setUserData(response.data.user);
             }
-        );
 
-        console.log("Login response:", response.data);
+            navigate("/home");
 
-        setUserData(response.data.user);
+        } catch (error) {
+            console.log("Login error:", error);
+            console.log(
+                "Login error response:",
+                error.response?.data
+            );
 
-        // Login successful হলে home page
-        navigate("/home");
+            setUserData(null);
 
-    } catch (error) {
-        console.log("Login error:", error);
-        console.log("Login error response:", error.response?.data);
+            setErrorMessage(
+                error.response?.data?.message ||
+                "Unable to login. Please try again."
+            );
 
-        setUserData(null);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        setErrorMessage(
-            error.response?.data?.message ||
-            "Unable to login. Please try again."
-        );
-    } finally {
-        setLoading(false);
-    }
-};
+    return (
+        <div className="login-page">
 
-  return (
-    <div className="login-page">
-
-      {/* Background Effects */}
-      <div className="login-bg">
-        <div className="login-orb login-orb-one"></div>
-        <div className="login-orb login-orb-two"></div>
-        <div className="login-grid"></div>
-      </div>
-
-      {/* Navbar */}
-      <header className="login-navbar">
-
-        <Link to="/" className="login-logo">
-
-          <div className="login-logo-icon">
-            ✦
-          </div>
-
-          <span>
-            Vexa<span>AI</span>
-          </span>
-
-        </Link>
-
-        <div className="login-nav-text">
-          Don't have an account?
-
-          <Link to="/signup">
-            Sign Up
-          </Link>
-        </div>
-
-      </header>
-
-      {/* Main */}
-      <main className="login-main">
-
-        {/* Left Introduction */}
-        <section className="login-intro">
-
-          <div className="login-badge">
-            <span></span>
-            WELCOME BACK
-          </div>
-
-          <h1>
-            Your intelligent
-            <span>digital companion</span>
-            is waiting.
-          </h1>
-
-          <p>
-            Sign in to continue your journey with VexaAI.
-            Get personalized assistance, stay organized,
-            and accomplish more with the power of AI.
-          </p>
-
-          <div className="login-features">
-
-            <div className="login-feature">
-
-              <div className="login-feature-icon">
-                ✦
-              </div>
-
-              <div>
-                <strong>
-                  Intelligent Assistance
-                </strong>
-
-                <span>
-                  Get smart answers and personalized help.
-                </span>
-              </div>
-
+            {/* Background Effects */}
+            <div className="login-bg">
+                <div className="login-orb login-orb-one"></div>
+                <div className="login-orb login-orb-two"></div>
+                <div className="login-grid"></div>
             </div>
 
-            <div className="login-feature">
+            {/* Navbar */}
+            <header className="login-navbar">
 
-              <div className="login-feature-icon">
-                ⚡
-              </div>
+                <Link to="/" className="login-logo">
 
-              <div>
-                <strong>
-                  Work Smarter
-                </strong>
+                    <div className="login-logo-icon">
+                        ✦
+                    </div>
 
-                <span>
-                  Save time and boost your productivity.
-                </span>
-              </div>
+                    <span>
+                        Vexa<span>AI</span>
+                    </span>
 
-            </div>
-
-            <div className="login-feature">
-
-              <div className="login-feature-icon">
-                🔒
-              </div>
-
-              <div>
-                <strong>
-                  Private & Secure
-                </strong>
-
-                <span>
-                  Your personal information stays protected.
-                </span>
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* Login Card */}
-        <section className="login-card">
-
-          <div className="login-card-header">
-
-            {/* Mobile Logo */}
-            <div className="login-mobile-logo">
-
-              <div className="login-logo-icon">
-                ✦
-              </div>
-
-              <span>
-                Vexa<span>AI</span>
-              </span>
-
-            </div>
-
-            <h2>
-              Welcome back
-            </h2>
-
-            <p>
-              Sign in to access your personal AI assistant.
-            </p>
-
-          </div>
-
-          {/* Login Form */}
-          <form
-            className="login-form"
-            onSubmit={handleSubmit}
-          >
-
-            {/* Email */}
-            <div className="login-form-group">
-
-              <label htmlFor="email">
-                Email Address
-              </label>
-
-              <div className="login-input-wrapper">
-
-                <span className="login-input-icon">
-                  ✉
-                </span>
-
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-
-              </div>
-
-            </div>
-
-            {/* Password */}
-            <div className="login-form-group">
-
-              <div className="login-password-label">
-
-                <label htmlFor="password">
-                  Password
-                </label>
-
-                <Link to="/forgot-password">
-                  Forgot Password?
                 </Link>
 
-              </div>
+                <div className="login-nav-text">
+                    Don't have an account?
 
-              <div className="login-input-wrapper">
+                    <Link to="/signup">
+                        Sign Up
+                    </Link>
+                </div>
 
-                <span className="login-input-icon">
-                  🔒
+            </header>
+
+            {/* Main */}
+            <main className="login-main">
+
+                {/* Left Introduction */}
+                <section className="login-intro">
+
+                    <div className="login-badge">
+                        <span></span>
+                        WELCOME BACK
+                    </div>
+
+                    <h1>
+                        Your intelligent
+                        <span>digital companion</span>
+                        is waiting.
+                    </h1>
+
+                    <p>
+                        Sign in to continue your journey with VexaAI.
+                        Get personalized assistance, stay organized,
+                        and accomplish more with the power of AI.
+                    </p>
+
+                    <div className="login-features">
+
+                        <div className="login-feature">
+
+                            <div className="login-feature-icon">
+                                ✦
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Intelligent Assistance
+                                </strong>
+
+                                <span>
+                                    Get smart answers and personalized help.
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div className="login-feature">
+
+                            <div className="login-feature-icon">
+                                ⚡
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Work Smarter
+                                </strong>
+
+                                <span>
+                                    Save time and boost your productivity.
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div className="login-feature">
+
+                            <div className="login-feature-icon">
+                                🔒
+                            </div>
+
+                            <div>
+                                <strong>
+                                    Private & Secure
+                                </strong>
+
+                                <span>
+                                    Your personal information stays protected.
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                {/* Login Card */}
+                <section className="login-card">
+
+                    <div className="login-card-header">
+
+                        <div className="login-mobile-logo">
+
+                            <div className="login-logo-icon">
+                                ✦
+                            </div>
+
+                            <span>
+                                Vexa<span>AI</span>
+                            </span>
+
+                        </div>
+
+                        <h2>
+                            Welcome back
+                        </h2>
+
+                        <p>
+                            Sign in to access your personal AI assistant.
+                        </p>
+
+                    </div>
+
+                    {/* Login Form */}
+                    <form
+                        className="login-form"
+                        onSubmit={handleSubmit}
+                    >
+
+                        {/* Email */}
+                        <div className="login-form-group">
+
+                            <label htmlFor="email">
+                                Email Address
+                            </label>
+
+                            <div className="login-input-wrapper">
+
+                                <span className="login-input-icon">
+                                    ✉
+                                </span>
+
+                                <input
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    placeholder="you@example.com"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                            </div>
+
+                        </div>
+
+                        {/* Password */}
+                        <div className="login-form-group">
+
+                            <div className="login-password-label">
+
+                                <label htmlFor="password">
+                                    Password
+                                </label>
+
+                                <Link to="/forgot-password">
+                                    Forgot Password?
+                                </Link>
+
+                            </div>
+
+                            <div className="login-input-wrapper">
+
+                                <span className="login-input-icon">
+                                    🔒
+                                </span>
+
+                                <input
+                                    id="password"
+                                    type={
+                                        showPassword
+                                            ? "text"
+                                            : "password"
+                                    }
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    className="login-password-toggle"
+                                    onClick={() =>
+                                        setShowPassword(
+                                            !showPassword
+                                        )
+                                    }
+                                >
+                                    {showPassword
+                                        ? "🙈"
+                                        : "👁"}
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        {/* Error Message */}
+                        {errorMessage && (
+                            <div className="login-error">
+                                <span>⚠</span>
+                                {errorMessage}
+                            </div>
+                        )}
+
+                        {/* Login Button */}
+                        <button
+                            type="submit"
+                            className="login-submit"
+                            disabled={loading}
+                        >
+
+                            {loading ? (
+                                <>
+                                    <span className="login-spinner"></span>
+                                    Signing in...
+                                </>
+                            ) : (
+                                <>
+                                    <span>
+                                        Sign In
+                                    </span>
+
+                                    <strong>
+                                        →
+                                    </strong>
+                                </>
+                            )}
+
+                        </button>
+
+                    </form>
+
+                    {/* Bottom Signup */}
+                    <p className="login-bottom">
+
+                        Don't have an account?
+
+                        <Link to="/signup">
+                            Create an account
+                        </Link>
+
+                    </p>
+
+                </section>
+
+            </main>
+
+            {/* Footer */}
+            <footer className="login-footer">
+
+                <span>
+                    © 2026 VexaAI
                 </span>
 
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
+                <span>
+                    Your intelligent digital companion.
+                </span>
 
-                <button
-                  type="button"
-                  className="login-password-toggle"
-                  onClick={() =>
-                    setShowPassword(!showPassword)
-                  }
-                >
-                  {showPassword ? "🙈" : "👁"}
-                </button>
+            </footer>
 
-              </div>
-
-            </div>
-
-            {/* Error Message */}
-            {errorMessage && (
-              <div className="login-error">
-                <span>⚠</span>
-                {errorMessage}
-              </div>
-            )}
-
-            {/* Login Button */}
-            <button
-              type="submit"
-              className="login-submit"
-              disabled={loading}
-            >
-
-              {loading ? (
-                <>
-                  <span className="login-spinner"></span>
-                  Signing in...
-                </>
-              ) : (
-                <>
-                  <span>
-                    Sign In
-                  </span>
-
-                  <strong>
-                    →
-                  </strong>
-                </>
-              )}
-
-            </button>
-
-          </form>
-
-          {/* Bottom Signup */}
-          <p className="login-bottom">
-
-            Don't have an account?
-
-            <Link to="/signup">
-              Create an account
-            </Link>
-
-          </p>
-
-        </section>
-
-      </main>
-
-      {/* Footer */}
-      <footer className="login-footer">
-
-        <span>
-          © 2026 VexaAI
-        </span>
-
-        <span>
-          Your intelligent digital companion.
-        </span>
-
-      </footer>
-
-    </div>
-  );
+        </div>
+    );
 };
 
 export default Login;
