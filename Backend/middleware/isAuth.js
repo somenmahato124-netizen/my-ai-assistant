@@ -17,9 +17,15 @@ const isAuth = async (req, res, next) => {
             process.env.JWT_SECRET
         );
 
-        console.log("TOKEN VERIFIED:", verifyToken);
+        if (!verifyToken?.userId) {
+            return res.status(401).json({
+                message: "Invalid token"
+            });
+        }
 
         req.userId = verifyToken.userId;
+
+        console.log("TOKEN VERIFIED");
 
         next();
 

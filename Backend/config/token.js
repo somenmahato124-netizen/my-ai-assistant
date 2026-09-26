@@ -5,11 +5,14 @@ export const gentoken = async (userId) => {
         const token = jwt.sign(
             { userId },
             process.env.JWT_SECRET,
-            { expiresIn: "10d" }
+            {
+                expiresIn: "10d"
+            }
         );
 
         return token;
     } catch (error) {
         console.log("Error token:", error.message);
+        return null;
     }
 };
