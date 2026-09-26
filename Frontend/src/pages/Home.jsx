@@ -89,7 +89,7 @@ const Home = () => {
               Login
             </Link>
 
-            <Link to="/signup" className="signup-btn">
+            <Link to="/chat" className="signup-btn">
               Get Started
             </Link>
           </div>
@@ -131,7 +131,7 @@ const Home = () => {
 
               <div className="hero-buttons">
 
-                <Link to="/signup" className="primary-btn">
+                <Link to="/chat" className="primary-btn">
                   Get Started Free
                   <span>→</span>
                 </Link>
@@ -503,7 +503,7 @@ const Home = () => {
 
             <div className="cta-buttons">
 
-              <Link to="/signup" className="primary-btn">
+              <Link to="/chat" className="primary-btn">
                 Get Started Free
                 <span>→</span>
               </Link>

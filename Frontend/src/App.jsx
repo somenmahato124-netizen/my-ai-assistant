@@ -14,6 +14,7 @@ const App=()=>{
   return (
     <Routes>
       <Route path="/" element={<Home/>}/>
+      <Route path="/chat" element={<MainPage/>}/>
       <Route path="/signup" element={!userData?<Signup/>:<Navigate to={"/home"}/>}/>
 
       <Route path="/login" element={!userData?<Login/>:<Navigate to={"/home"}/>}/>
